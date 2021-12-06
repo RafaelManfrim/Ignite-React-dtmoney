@@ -10,7 +10,8 @@ export const GlobalStyle = createGlobalStyle`
         --text-title: #363f5f;
         --text-body: #969cb3;
 
-        --background: #f0f2f5;
+        /* --background: #f0f2f5; */
+        --background: #ebebeb;
         --shape: #ffffff;
     }
     
