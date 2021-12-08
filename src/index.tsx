@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { App } from './App';
 import { createServer, Model } from 'miragejs'
+import { TransactionsProvider } from './contexts/TransactionsContext';
 
 createServer({
   models: {
@@ -33,11 +34,14 @@ createServer({
 
   routes() {
     this.namespace = 'api'
-    this.get('/transactions', () => {
+    this.get('/transactions/', () => {
       return this.schema.all('transaction')
     })
-    this.post('/transactions', (schema, request) => {
-      const data = JSON.parse(request.requestBody)
+    this.post('/transactions/', (schema, request) => {
+      const data = {
+        ...JSON.parse(request.requestBody), 
+        createdAt: new Date()
+      }
       return schema.create('transaction', data)
     })
   }
@@ -45,7 +49,9 @@ createServer({
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <TransactionsProvider>
+      <App />
+    </TransactionsProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
